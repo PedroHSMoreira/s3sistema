@@ -1,12 +1,12 @@
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { map } from "rxjs/operators";
+import { map, tap, shareReplay } from "rxjs/operators";
 
 const httpOptions = {
   headers: new HttpHeaders({
     'Content-Type':  'application/x-www-form-urlencoded',
-    'Authorization': 'Bearer 866fd5ccbc10175d7f9043b8ac81a9ab2004c6e6c07538983e31165b0d20591a'
+    'Authorization': 'Bearer 0977141a92cf7ace598cae66f87f7360b7a26ed026e1d61a528f2a3513ac8cea'
   })
 };
 @Injectable()
@@ -15,7 +15,7 @@ public access_token: string;
 private URL = 'https://s3sistema.herokuapp.com'
 
   constructor(private http: HttpClient) {
-    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    const currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
     this.access_token = currentUser && currentUser.access_token
   }
    
@@ -30,15 +30,16 @@ private URL = 'https://s3sistema.herokuapp.com'
         }
         return user;
        })
-     )
-   }
-
-   getList(): Observable<any> {
-    return this.http.post<any>(`${this.URL}/control/createstock`,{"name":"TESTENADOPOST"},httpOptions)
+      // tap(res => sessionStorage.setItem('access_token',JSON.stringify(res)))
+      )
+    }   
+    
+    getList(): Observable<any> {
+      return this.http.post<any>(`${this.URL}/control/createfinance`,{"name":"Lucas"},httpOptions)
    }
    
    getStock() {
-     return this.http.get(`${this.URL}/control/liststock`,httpOptions)
+     return this.http.get(`${this.URL}/control/listfinance`,httpOptions)
    }
 
    deletStock() {

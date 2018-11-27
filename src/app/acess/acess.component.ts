@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from "../api.service";
 import { map } from "rxjs/operators";
+import { Key } from 'protractor';
+
 @Component({
   selector: 'app-acess',
   templateUrl: './acess.component.html',
@@ -8,9 +10,10 @@ import { map } from "rxjs/operators";
   providers: [ApiService]
 })
 export class AcessComponent implements OnInit {
-  public token: any
   constructor(private api: ApiService) { }
 
+  public access_token: string
+  
   ngOnInit() {
 
   }
@@ -18,7 +21,10 @@ export class AcessComponent implements OnInit {
     this.api.login('3s1000','admin', '12345')
       .subscribe(
         data => {
-        console.log(JSON.stringify(data))
+          const s = JSON.parse(sessionStorage.getItem('currentUser'))
+          this.access_token = s.access_token
+          console.log(this.access_token)
+          console.log(data)
         }
       )
   }
@@ -33,7 +39,11 @@ export class AcessComponent implements OnInit {
   getStock(){
     this.api.getStock()
     .subscribe(
-      stock => console.log(stock)
+      stock => { 
+        for (let key in stock.data[0]) {
+            console.log(stock.data[0][key])
+        }
+      }
     )
   }
 
