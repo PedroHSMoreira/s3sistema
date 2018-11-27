@@ -1,0 +1,15 @@
+{
+    "/control/*":{
+        "target": "https://sgvgestao.herokuapp.com",
+        "secure": false,
+        "logLevel": "debug",
+        "changeOrigin": true
+    },
+    "/oauth/*": {
+        "target":"https://sgvgestao.herokuapp.com",
+        "secure": false,
+        "loglevel":"debug",
+        "changeOrigin":true
+    }
+    
+}
