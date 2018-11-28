@@ -13,7 +13,6 @@ export class AcessComponent implements OnInit {
   constructor(private api: ApiService) { }
 
   public access_token: string
-  
   ngOnInit() {
 
   }
@@ -40,9 +39,10 @@ export class AcessComponent implements OnInit {
     this.api.getStock()
     .subscribe(
       stock => { 
-        for (let key in stock.data[0]) {
-            console.log(stock.data[0][key])
-        }
+        // for (let key in stock.data[0]) {
+        //     console.log(stock.data[0][key])
+        // }
+        console.log(stock)
       }
     )
   }
